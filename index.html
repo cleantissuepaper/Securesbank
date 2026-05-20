@@ -1,0 +1,1679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>SecureBank Pro</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#eef2ff;
+overflow-x:hidden;
+}
+
+/* LOGIN */
+
+#loginPage{
+height:100vh;
+display:flex;
+}
+
+.left{
+width:50%;
+background:#0f172a;
+color:white;
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+padding:40px;
+}
+
+.left h1{
+font-size:65px;
+margin-bottom:20px;
+}
+
+.left p{
+font-size:24px;
+text-align:center;
+line-height:1.8;
+}
+
+.right{
+width:50%;
+display:flex;
+justify-content:center;
+align-items:center;
+}
+
+.login-box{
+width:430px;
+background:white;
+padding:40px;
+border-radius:20px;
+box-shadow:0 0 20px rgba(0,0,0,0.1);
+}
+
+.login-box h2{
+text-align:center;
+margin-bottom:20px;
+font-size:35px;
+}
+
+.input{
+width:100%;
+padding:14px;
+margin-bottom:15px;
+border:1px solid #ccc;
+border-radius:10px;
+font-size:16px;
+}
+
+.btn{
+padding:14px;
+border:none;
+background:#2563eb;
+color:white;
+border-radius:10px;
+cursor:pointer;
+font-size:16px;
+font-weight:bold;
+transition:0.3s;
+}
+
+.btn:hover{
+background:#1d4ed8;
+}
+
+/* DASHBOARD */
+
+#dashboard{
+display:none;
+}
+
+.sidebar{
+position:fixed;
+left:0;
+top:0;
+width:280px;
+height:100vh;
+background:#0f172a;
+padding:20px;
+overflow:auto;
+}
+
+.logo{
+color:white;
+font-size:30px;
+font-weight:bold;
+margin-bottom:30px;
+text-align:center;
+}
+
+.menu button{
+width:100%;
+padding:15px;
+margin-bottom:12px;
+border:none;
+border-radius:12px;
+background:#1e293b;
+color:white;
+font-size:16px;
+cursor:pointer;
+text-align:left;
+}
+
+.menu button:hover{
+background:#2563eb;
+}
+
+.main{
+margin-left:280px;
+padding:20px;
+}
+
+.topbar{
+background:white;
+padding:20px;
+border-radius:15px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+box-shadow:0 0 10px rgba(0,0,0,0.08);
+margin-bottom:20px;
+}
+
+.cards{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:20px;
+margin-bottom:20px;
+}
+
+.card{
+background:white;
+padding:25px;
+border-radius:18px;
+box-shadow:0 0 10px rgba(0,0,0,0.08);
+}
+
+.card h3{
+color:#2563eb;
+margin-bottom:10px;
+}
+
+.card p{
+font-size:32px;
+font-weight:bold;
+}
+
+.section{
+display:none;
+background:white;
+padding:25px;
+border-radius:18px;
+box-shadow:0 0 10px rgba(0,0,0,0.08);
+margin-bottom:20px;
+}
+
+.active{
+display:block;
+}
+
+.form-group{
+margin-bottom:15px;
+}
+
+.form-group label{
+display:block;
+margin-bottom:8px;
+font-weight:bold;
+}
+
+.form-group input,
+.form-group select{
+width:100%;
+padding:12px;
+border:1px solid #ccc;
+border-radius:10px;
+}
+
+.grid2{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:20px;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:20px;
+}
+
+table th,
+table td{
+padding:12px;
+border:1px solid #ddd;
+text-align:left;
+}
+
+table th{
+background:#2563eb;
+color:white;
+}
+
+.action-btn{
+padding:8px 12px;
+border:none;
+border-radius:8px;
+cursor:pointer;
+color:white;
+margin-right:5px;
+}
+
+.edit-btn{
+background:orange;
+}
+
+.delete-btn{
+background:red;
+}
+
+.approve-btn{
+background:green;
+}
+
+.status-box{
+background:#111827;
+color:white;
+padding:25px;
+border-radius:20px;
+margin-top:20px;
+}
+
+.status-line{
+display:flex;
+align-items:center;
+margin-bottom:18px;
+font-size:18px;
+}
+
+.status-line i{
+color:#22c55e;
+margin-right:15px;
+font-size:22px;
+}
+
+.success-popup{
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+background:#111827;
+color:white;
+padding:35px;
+border-radius:25px;
+width:350px;
+z-index:9999;
+box-shadow:0 0 30px rgba(0,0,0,0.4);
+animation:pop .4s ease;
+}
+
+.success-popup h1{
+font-size:50px;
+margin-bottom:10px;
+}
+
+.success-popup h2{
+margin-bottom:20px;
+}
+
+.success-popup p{
+margin-bottom:10px;
+font-size:18px;
+}
+
+@keyframes pop{
+0%{
+transform:translate(-50%,-50%) scale(0.5);
+opacity:0;
+}
+100%{
+transform:translate(-50%,-50%) scale(1);
+opacity:1;
+}
+}
+
+@media(max-width:900px){
+
+#loginPage{
+flex-direction:column;
+}
+
+.left,.right{
+width:100%;
+height:50vh;
+}
+
+.sidebar{
+position:relative;
+width:100%;
+height:auto;
+}
+
+.main{
+margin-left:0;
+}
+
+.grid2{
+grid-template-columns:1fr;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- LOGIN -->
+
+<div id="loginPage">
+
+<div class="left">
+
+<h1>🏦 SecureBank</h1>
+
+<p>
+
+Professional Banking Software
+
+<br><br>
+
+Secure • Fast • Reliable
+
+</p>
+
+</div>
+
+<div class="right">
+
+<div class="login-box">
+
+<h2>Admin Login</h2>
+
+<input type="text"
+id="user"
+class="input"
+placeholder="Enter ID">
+
+<input type="password"
+id="pass"
+class="input"
+placeholder="Enter Password">
+
+<button class="btn"
+style="width:100%;"
+onclick="userLogin()">
+
+Login
+
+</button>
+
+<br><br>
+
+<p style="text-align:center;">
+
+<b></b> 
+<br>
+<b></b> 
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- DASHBOARD -->
+
+<div id="dashboard">
+
+<div class="sidebar">
+
+<div class="logo">
+🏦 SecureBank
+</div>
+
+<div class="menu">
+
+<button onclick="showSection('home')">
+🏠 Dashboard
+</button>
+
+<button onclick="showSection('openAccount')">
+👤 Open Account
+</button>
+
+<button onclick="showSection('deposit')">
+💰 Deposit
+</button>
+
+<button onclick="showSection('withdraw')">
+🏧 Withdraw
+</button>
+
+<button onclick="showSection('transfer')">
+💸 Transfer
+</button>
+
+<button onclick="showSection('customers')">
+📋 Customers
+</button>
+
+<button onclick="showSection('transactions')">
+📑 Transactions
+</button>
+
+<button id="managePeopleBtn"
+onclick="showSection('managePeople')">
+
+👨‍💼 Manage People
+
+</button>
+
+<button onclick="showSection('requests')">
+📨 Manage Requests
+</button>
+
+<button onclick="logout()">
+🚪 Logout
+</button>
+
+</div>
+
+</div>
+
+<div class="main">
+
+<div class="topbar">
+
+<h2 id="welcomeText">
+Welcome
+</h2>
+
+</div>
+
+<!-- CARDS -->
+
+<div class="cards">
+
+<div class="card">
+<h3>Total Customers</h3>
+<p id="totalCustomers">0</p>
+</div>
+
+<div class="card">
+<h3>Total Accounts</h3>
+<p id="totalAccounts">0</p>
+</div>
+
+<div class="card">
+<h3>Total Transactions</h3>
+<p id="totalTransactions">0</p>
+</div>
+
+<div class="card">
+<h3>Total Balance</h3>
+<p id="totalBalance">₹0</p>
+</div>
+
+</div>
+
+<!-- HOME -->
+
+<div id="home" class="section active">
+
+<h1>🏦 Welcome To SecureBank</h1>
+
+<br>
+
+<p style="font-size:20px;">
+Professional Real Banking Software
+</p>
+
+</div>
+
+<!-- OPEN ACCOUNT -->
+
+<div id="openAccount" class="section">
+
+<h2>Open Account</h2>
+
+<br>
+
+<div class="grid2">
+
+<div>
+
+<div class="form-group">
+<label>Name</label>
+<input type="text" id="name">
+</div>
+
+<div class="form-group">
+<label>Mobile</label>
+<input type="text" id="mobile">
+</div>
+
+<div class="form-group">
+<label>Email</label>
+<input type="email" id="email">
+</div>
+
+</div>
+
+<div>
+
+<div class="form-group">
+<label>PAN</label>
+<input type="text" id="pan">
+</div>
+
+<div class="form-group">
+<label>Opening Balance</label>
+<input type="number" id="balance">
+</div>
+
+<div class="form-group">
+<label>Branch</label>
+
+<select id="branch">
+<option>Pune</option>
+<option>Mumbai</option>
+<option>Aurangabad</option>
+</select>
+
+</div>
+
+</div>
+
+</div>
+
+<button class="btn"
+style="width:100%;"
+onclick="openAccount()">
+
+Open Account
+
+</button>
+
+<div id="accountMsg"></div>
+
+</div>
+
+<!-- DEPOSIT -->
+
+<div id="deposit" class="section">
+
+<h2>Deposit Money</h2>
+
+<br>
+
+<div class="form-group">
+<label>Search Account</label>
+<input type="text" id="depositSearch">
+</div>
+
+<button class="btn"
+onclick="findDepositCustomer()">
+
+Find Account
+
+</button>
+
+<br><br>
+
+<div id="depositInfo"></div>
+
+<br>
+
+<div class="form-group">
+<label>Account Number</label>
+<input type="text" id="depositAcc">
+</div>
+
+<div class="form-group">
+<label>Amount</label>
+<input type="number" id="depositAmount">
+</div>
+
+<button class="btn"
+style="width:100%;"
+onclick="depositMoney()">
+
+Deposit
+
+</button>
+
+</div>
+
+<!-- WITHDRAW -->
+
+<div id="withdraw" class="section">
+
+<h2>Withdraw Money</h2>
+
+<br>
+
+<div class="form-group">
+<label>Search Account</label>
+<input type="text" id="withdrawSearch">
+</div>
+
+<button class="btn"
+onclick="findWithdrawCustomer()">
+
+Find Account
+
+</button>
+
+<br><br>
+
+<div id="withdrawInfo"></div>
+
+<br>
+
+<div class="form-group">
+<label>Account Number</label>
+<input type="text" id="withdrawAcc">
+</div>
+
+<div class="form-group">
+<label>Amount</label>
+<input type="number" id="withdrawAmount">
+</div>
+
+<button class="btn"
+style="width:100%;"
+onclick="withdrawMoney()">
+
+Withdraw
+
+</button>
+
+</div>
+
+<!-- TRANSFER -->
+
+<div id="transfer" class="section">
+
+<h2>Fund Transfer</h2>
+
+<br>
+
+<div class="form-group">
+<label>Sender Account</label>
+<input type="text" id="senderAcc">
+</div>
+
+<div class="form-group">
+<label>Receiver Account</label>
+<input type="text" id="receiverAcc">
+</div>
+
+<div class="form-group">
+<label>Amount</label>
+<input type="number" id="transferAmount">
+</div>
+
+<button class="btn"
+style="width:100%;"
+onclick="transferMoney()">
+
+Transfer
+
+</button>
+
+</div>
+
+<!-- CUSTOMERS -->
+
+<div id="customers" class="section">
+
+<h2>Customers</h2>
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Account</th>
+<th>Name</th>
+<th>Mobile</th>
+<th>Balance</th>
+<th>Action</th>
+
+</tr>
+
+</thead>
+
+<tbody id="customerTable"></tbody>
+
+</table>
+
+</div>
+
+<!-- TRANSACTIONS -->
+
+<div id="transactions" class="section">
+
+<h2>Transactions</h2>
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>ID</th>
+<th>Type</th>
+<th>Account</th>
+<th>Amount</th>
+<th>Date</th>
+
+</tr>
+
+</thead>
+
+<tbody id="transactionTable"></tbody>
+
+</table>
+
+</div>
+
+<!-- MANAGE PEOPLE -->
+
+<div id="managePeople" class="section">
+
+<h2>Manage People</h2>
+
+<br>
+
+<div class="grid2">
+
+<div>
+
+<div class="form-group">
+<label>Name</label>
+<input type="text" id="adminName">
+</div>
+
+<div class="form-group">
+<label>Bank</label>
+<input type="text" id="bankName">
+</div>
+
+</div>
+
+<div>
+
+<div class="form-group">
+<label>ID</label>
+<input type="text" id="newId">
+</div>
+
+<div class="form-group">
+<label>Password</label>
+<input type="password" id="newPass">
+</div>
+
+<div class="form-group">
+<label>Role</label>
+
+<select id="role">
+<option value="cashier">Cashier</option>
+<option value="admin">Admin</option>
+</select>
+
+</div>
+
+</div>
+
+</div>
+
+<button class="btn"
+style="width:100%;"
+onclick="addPeople()">
+
+Add Person
+
+</button>
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Name</th>
+<th>Role</th>
+<th>Bank</th>
+<th>ID</th>
+
+</tr>
+
+</thead>
+
+<tbody id="peopleTable"></tbody>
+
+</table>
+
+</div>
+
+<!-- REQUEST -->
+
+<div id="requests" class="section">
+
+<h2>Manage Requests</h2>
+
+<br>
+
+<div class="form-group">
+<label>Account Number</label>
+<input type="text" id="reqAcc">
+</div>
+
+<div class="form-group">
+<label>Edit Field</label>
+
+<select id="reqField">
+
+<option value="name">Name</option>
+<option value="mobile">Mobile</option>
+<option value="email">Email</option>
+<option value="pan">PAN</option>
+
+</select>
+
+</div>
+
+<div class="form-group">
+<label>New Value</label>
+<input type="text" id="reqValue">
+</div>
+
+<button class="btn"
+style="width:100%;"
+onclick="submitRequest()">
+
+Submit Request
+
+</button>
+
+<div id="requestStatus"></div>
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Account</th>
+<th>Field</th>
+<th>Value</th>
+<th>Status</th>
+<th>Action</th>
+
+</tr>
+
+</thead>
+
+<tbody id="requestTable"></tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+/* DATA */
+
+let users = JSON.parse(
+localStorage.getItem("bankUsers")
+) || [
+
+{
+role:"admin",
+name:"Super Admin",
+bank:"SecureBank",
+id:"admin",
+pass:"1234"
+}
+
+];
+
+let customers = JSON.parse(
+localStorage.getItem("customers")
+) || [];
+
+let transactions = JSON.parse(
+localStorage.getItem("transactions")
+) || [];
+
+let requests = JSON.parse(
+localStorage.getItem("requests")
+) || [];
+
+/* SAVE */
+
+function saveData(){
+
+localStorage.setItem(
+"bankUsers",
+JSON.stringify(users)
+);
+
+localStorage.setItem(
+"customers",
+JSON.stringify(customers)
+);
+
+localStorage.setItem(
+"transactions",
+JSON.stringify(transactions)
+);
+
+localStorage.setItem(
+"requests",
+JSON.stringify(requests)
+);
+
+}
+
+/* LOGIN */
+
+function userLogin(){
+
+let u =
+document.getElementById("user")
+.value.trim();
+
+let p =
+document.getElementById("pass")
+.value.trim();
+
+let found =
+users.find(user =>
+
+user.id === u &&
+user.pass === p
+
+);
+
+if(found){
+
+localStorage.setItem(
+"currentUser",
+JSON.stringify(found)
+);
+
+document.getElementById(
+"loginPage"
+).style.display="none";
+
+document.getElementById(
+"dashboard"
+).style.display="block";
+
+document.getElementById(
+"welcomeText"
+).innerHTML =
+"Welcome "+found.name;
+
+if(found.role==="cashier"){
+
+document.getElementById(
+"managePeopleBtn"
+).style.display="none";
+
+}
+
+renderCustomers();
+renderTransactions();
+renderPeople();
+renderRequests();
+updateDashboard();
+
+}else{
+
+alert("Wrong Login Details");
+
+}
+
+}
+
+/* LOGOUT */
+
+function logout(){
+
+document.getElementById(
+"dashboard"
+).style.display="none";
+
+document.getElementById(
+"loginPage"
+).style.display="flex";
+
+}
+
+/* SECTION */
+
+function showSection(id){
+
+document.querySelectorAll(
+".section"
+).forEach(sec=>{
+
+sec.classList.remove("active");
+
+});
+
+document.getElementById(id)
+.classList.add("active");
+
+}
+
+/* ACCOUNT */
+
+function openAccount(){
+
+let customer={
+
+acc:Math.floor(
+100000000000+
+Math.random()*900000000000
+).toString(),
+
+name:document.getElementById("name").value,
+mobile:document.getElementById("mobile").value,
+email:document.getElementById("email").value,
+pan:document.getElementById("pan").value,
+
+balance:parseInt(
+document.getElementById("balance").value
+),
+
+branch:document.getElementById("branch").value
+
+};
+
+customers.push(customer);
+
+addTransaction(
+"Account Open",
+customer.acc,
+customer.balance
+);
+
+saveData();
+
+renderCustomers();
+updateDashboard();
+
+document.getElementById(
+"accountMsg"
+).innerHTML=
+
+"<br><b>Account Created :</b> "+
+customer.acc;
+
+}
+
+/* TRANSACTION */
+
+function addTransaction(type,acc,amount){
+
+transactions.push({
+
+id:"TXN"+Math.floor(
+100000+Math.random()*900000
+),
+
+type,
+acc,
+amount,
+date:new Date().toLocaleString()
+
+});
+
+saveData();
+
+renderTransactions();
+
+}
+
+/* SEARCH */
+
+function findDepositCustomer(){
+
+let value =
+document.getElementById(
+"depositSearch"
+).value;
+
+let c =
+customers.find(customer=>
+
+customer.acc.includes(value)
+
+);
+
+if(c){
+
+document.getElementById(
+"depositAcc"
+).value=c.acc;
+
+document.getElementById(
+"depositInfo"
+).innerHTML=
+
+"Name : "+c.name+
+"<br>Balance : ₹"+c.balance;
+
+}
+
+}
+
+function findWithdrawCustomer(){
+
+let value =
+document.getElementById(
+"withdrawSearch"
+).value;
+
+let c =
+customers.find(customer=>
+
+customer.acc.includes(value)
+
+);
+
+if(c){
+
+document.getElementById(
+"withdrawAcc"
+).value=c.acc;
+
+document.getElementById(
+"withdrawInfo"
+).innerHTML=
+
+"Name : "+c.name+
+"<br>Balance : ₹"+c.balance;
+
+}
+
+}
+
+/* POPUP */
+
+function paymentPopup(type,amount,acc){
+
+let div =
+document.createElement("div");
+
+div.className="success-popup";
+
+div.innerHTML =
+
+"<h1>₹"+amount+"</h1>"+
+
+"<h2>"+type+" Successful</h2>"+
+
+"<p>✔ Payment Started</p>"+
+
+"<p>✔ Bank Processing</p>"+
+
+"<p>✔ "+type+" Completed</p>"+
+
+"<br>"+
+
+"<p><b>Account :</b> "+acc+"</p>"+
+
+"<p>"+new Date().toLocaleString()+"</p>";
+
+document.body.appendChild(div);
+
+setTimeout(()=>{
+
+div.remove();
+
+},3000);
+
+}
+
+/* DEPOSIT */
+
+function depositMoney(){
+
+let acc =
+document.getElementById(
+"depositAcc"
+).value;
+
+let amount =
+parseInt(
+document.getElementById(
+"depositAmount"
+).value
+);
+
+let c =
+customers.find(x=>x.acc===acc);
+
+if(c){
+
+c.balance += amount;
+
+addTransaction(
+"Deposit",
+acc,
+amount
+);
+
+saveData();
+
+renderCustomers();
+updateDashboard();
+
+paymentPopup(
+"Deposit",
+amount,
+acc
+);
+
+}
+
+}
+
+/* WITHDRAW */
+
+function withdrawMoney(){
+
+let acc =
+document.getElementById(
+"withdrawAcc"
+).value;
+
+let amount =
+parseInt(
+document.getElementById(
+"withdrawAmount"
+).value
+);
+
+let c =
+customers.find(x=>x.acc===acc);
+
+if(c && c.balance>=amount){
+
+c.balance -= amount;
+
+addTransaction(
+"Withdraw",
+acc,
+amount
+);
+
+saveData();
+
+renderCustomers();
+updateDashboard();
+
+paymentPopup(
+"Withdraw",
+amount,
+acc
+);
+
+}
+
+}
+
+/* TRANSFER */
+
+function transferMoney(){
+
+let s =
+customers.find(
+x=>x.acc===document.getElementById("senderAcc").value
+);
+
+let r =
+customers.find(
+x=>x.acc===document.getElementById("receiverAcc").value
+);
+
+let amount =
+parseInt(
+document.getElementById("transferAmount").value
+);
+
+if(s && r && s.balance>=amount){
+
+s.balance -= amount;
+r.balance += amount;
+
+addTransaction(
+"Transfer",
+s.acc+" ➜ "+r.acc,
+amount
+);
+
+saveData();
+
+renderCustomers();
+updateDashboard();
+
+paymentPopup(
+"Transfer",
+amount,
+s.acc
+);
+
+}
+
+}
+
+/* CUSTOMERS */
+
+function renderCustomers(){
+
+let table =
+document.getElementById(
+"customerTable"
+);
+
+table.innerHTML="";
+
+let currentUser =
+JSON.parse(
+localStorage.getItem(
+"currentUser"
+)
+) || { role:"admin" };
+
+customers.forEach((c,index)=>{
+
+table.innerHTML +=
+
+"<tr>"+
+
+"<td>"+c.acc+"</td>"+
+"<td>"+c.name+"</td>"+
+"<td>"+c.mobile+"</td>"+
+"<td>₹"+c.balance+"</td>"+
+
+"<td>"+
+
+(currentUser.role==="admin"
+
+?
+
+'<button class="action-btn edit-btn" onclick="editCustomer('+index+')">Edit</button>'+
+
+'<button class="action-btn delete-btn" onclick="deleteCustomer('+index+')">Delete</button>'
+
+:
+
+'No Access'
+
+)
+
++"</td>"+
+
+"</tr>";
+
+});
+
+}
+
+/* EDIT */
+
+function editCustomer(index){
+
+let name =
+prompt(
+"Edit Name",
+customers[index].name
+);
+
+if(name){
+
+customers[index].name=name;
+
+saveData();
+renderCustomers();
+
+}
+
+}
+
+/* DELETE */
+
+function deleteCustomer(index){
+
+if(confirm("Delete Account ?")){
+
+customers.splice(index,1);
+
+saveData();
+
+renderCustomers();
+updateDashboard();
+
+}
+
+}
+
+/* PEOPLE */
+
+function addPeople(){
+
+users.push({
+
+name:document.getElementById("adminName").value,
+bank:document.getElementById("bankName").value,
+id:document.getElementById("newId").value,
+pass:document.getElementById("newPass").value,
+role:document.getElementById("role").value
+
+});
+
+saveData();
+
+renderPeople();
+
+alert("Person Added");
+
+}
+
+function renderPeople(){
+
+let table =
+document.getElementById(
+"peopleTable"
+);
+
+table.innerHTML="";
+
+users.forEach(u=>{
+
+table.innerHTML +=
+
+"<tr>"+
+
+"<td>"+u.name+"</td>"+
+"<td>"+u.role+"</td>"+
+"<td>"+u.bank+"</td>"+
+"<td>"+u.id+"</td>"+
+
+"</tr>";
+
+});
+
+}
+
+/* REQUEST */
+
+function submitRequest(){
+
+requests.push({
+
+acc:document.getElementById("reqAcc").value,
+field:document.getElementById("reqField").value,
+value:document.getElementById("reqValue").value,
+status:"Request Submitted"
+
+});
+
+saveData();
+
+renderRequests();
+
+}
+
+/* RENDER REQUEST */
+
+function renderRequests(){
+
+let table =
+document.getElementById(
+"requestTable"
+);
+
+table.innerHTML="";
+
+let currentUser =
+JSON.parse(
+localStorage.getItem(
+"currentUser"
+)
+) || { role:"admin" };
+
+requests.forEach((r,index)=>{
+
+table.innerHTML +=
+
+"<tr>"+
+
+"<td>"+r.acc+"</td>"+
+"<td>"+r.field+"</td>"+
+"<td>"+r.value+"</td>"+
+
+"<td>"+r.status+"</td>"+
+
+"<td>"+
+
+(currentUser.role==="admin"
+
+?
+
+'<button class="action-btn approve-btn" onclick="nextRequestStatus('+index+')">Next</button>'
+
+:
+
+'Waiting'
+
+)
+
++
+
+"</td>"+
+
+"</tr>";
+
+});
+
+}
+
+/* STATUS */
+
+function nextRequestStatus(index){
+
+let req=requests[index];
+
+if(req.status==="Request Submitted"){
+
+req.status="Waiting";
+
+}else if(req.status==="Waiting"){
+
+req.status="Approved";
+
+let c =
+customers.find(x=>x.acc===req.acc);
+
+if(c){
+
+c[req.field]=req.value;
+
+}
+
+}
+
+saveData();
+
+renderRequests();
+renderCustomers();
+
+}
+
+/* TRANSACTIONS */
+
+function renderTransactions(){
+
+let table =
+document.getElementById(
+"transactionTable"
+);
+
+table.innerHTML="";
+
+transactions.forEach(t=>{
+
+table.innerHTML +=
+
+"<tr>"+
+
+"<td>"+t.id+"</td>"+
+"<td>"+t.type+"</td>"+
+"<td>"+t.acc+"</td>"+
+"<td>₹"+t.amount+"</td>"+
+"<td>"+t.date+"</td>"+
+
+"</tr>";
+
+});
+
+}
+
+/* DASHBOARD */
+
+function updateDashboard(){
+
+document.getElementById(
+"totalCustomers"
+).innerHTML=
+customers.length;
+
+document.getElementById(
+"totalAccounts"
+).innerHTML=
+customers.length;
+
+document.getElementById(
+"totalTransactions"
+).innerHTML=
+transactions.length;
+
+let total=0;
+
+customers.forEach(c=>{
+
+total+=c.balance;
+
+});
+
+document.getElementById(
+"totalBalance"
+).innerHTML=
+"₹"+total;
+
+}
+
+</script>
+
+</body>
+</html>
